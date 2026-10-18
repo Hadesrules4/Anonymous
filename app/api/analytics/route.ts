@@ -3,7 +3,6 @@ import connectDB from "@/lib/db";
 import Feedback from "@/models/Feedback";
 import FeedbackRequest from "@/models/FeedbackRequest";
 import { auth } from "@/lib/auth";
-import mongoose from "mongoose";
 
 export async function GET() {
   try {
@@ -13,7 +12,7 @@ export async function GET() {
     }
 
     await connectDB();
-    const userId = new mongoose.Types.ObjectId(session.user.id);
+    const userId = session.user.id;
 
     // Total feedbacks
     const totalFeedback = await Feedback.countDocuments({

@@ -91,8 +91,11 @@ export async function signupUser(input: unknown) {
 
     return {
       success: true,
-      message: "Account created! A 6-digit verification code has been sent to your email.",
+      message: !process.env.RESEND_API_KEY
+        ? `Account created! Verification code: ${otp}`
+        : "Account created! A 6-digit verification code has been sent to your email.",
       email: normalizedEmail,
+      devOtp: !process.env.RESEND_API_KEY ? otp : undefined,
     };
   } catch (error: any) {
     console.error("Signup error:", error);
@@ -200,7 +203,10 @@ export async function resendVerificationCode(email: string) {
 
     return {
       success: true,
-      message: "A new 6-digit verification code has been sent to your email.",
+      message: !process.env.RESEND_API_KEY
+        ? `A new verification code has been generated: ${otp}`
+        : "A new 6-digit verification code has been sent to your email.",
+      devOtp: !process.env.RESEND_API_KEY ? otp : undefined,
     };
   } catch (error: any) {
     console.error("Resend OTP error:", error);

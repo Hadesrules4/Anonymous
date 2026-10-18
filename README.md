@@ -19,11 +19,11 @@ A modern, full-stack anonymous feedback platform where users create contextual f
 
 - **Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Lucide Icons, Sonner
 - **Backend:** Next.js Server Actions & REST API Route Handlers
-- **Database & ODM:** MongoDB Atlas + Mongoose
+- **Database:** PostgreSQL (with `pg` connection pool)
 - **Authentication:** Auth.js (NextAuth.js v5)
 - **Validation:** Zod + React Hook Form
-- **Email:** Resend + React Email
-- **AI:** OpenAI API (`gpt-4o-mini`)
+- **Email:** Resend + React Email (with dev console OTP fallback)
+- **AI:** OpenAI API (`gpt-4o-mini`, with curated fallbacks)
 - **Charts:** Recharts
 
 ---
@@ -44,7 +44,7 @@ npm install
 ### 3. Setup Environment Variables
 Create a `.env.local` file in the root directory (refer to `.env.example`):
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/unsaid?retryWrites=true&w=majority
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/unsaid?sslmode=disable
 AUTH_SECRET=your_super_secret_auth_key
 NEXTAUTH_URL=http://localhost:3000
 RESEND_API_KEY=re_your_api_key

@@ -16,6 +16,7 @@ export function VerifyEmailForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialEmail = searchParams.get("email") || "";
+  const initialCode = searchParams.get("code") || "";
 
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -26,12 +27,13 @@ export function VerifyEmailForm() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<VerifyEmailInput>({
     resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
       email: initialEmail,
-      code: "",
+      code: initialCode,
     },
   });
 
@@ -76,6 +78,9 @@ export function VerifyEmailForm() {
       if (!res.success) {
         setErrorMessage(res.error || "Failed to resend code.");
       } else {
+        if (res.devOtp) {
+          setValue("code", res.devOtp);
+        }
         setSuccessMessage(res.message || "A new 6-digit code has been sent!");
       }
     } catch (err: any) {

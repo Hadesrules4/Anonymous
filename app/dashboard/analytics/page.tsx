@@ -5,7 +5,6 @@ import FeedbackRequest from "@/models/FeedbackRequest";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { AnalyticsCharts } from "@/components/dashboard/AnalyticsCharts";
-import mongoose from "mongoose";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,7 +18,7 @@ export default async function AnalyticsPage() {
   }
 
   await connectDB();
-  const userId = new mongoose.Types.ObjectId(session.user.id);
+  const userId = session.user.id;
 
   const totalFeedback = await Feedback.countDocuments({
     recipientId: userId,

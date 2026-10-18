@@ -37,8 +37,9 @@ export function SignupForm() {
         return;
       }
 
-      // Redirect to email verification page with prefilled email
-      router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+      // Redirect to email verification page with prefilled email and dev OTP if available
+      const otpParam = res.devOtp ? `&code=${encodeURIComponent(res.devOtp)}` : "";
+      router.push(`/verify-email?email=${encodeURIComponent(data.email)}${otpParam}`);
     } catch (err: any) {
       setErrorMessage(err.message || "An unexpected error occurred.");
     } finally {
